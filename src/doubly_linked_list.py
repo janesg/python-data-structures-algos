@@ -1,10 +1,10 @@
-class LinkedList:
+class DoublyLinkedList:
     def __init__(self, initial_value=None):
         self.__head = None
         self.__length = 0
 
         if initial_value is not None:
-            self.__head = LinkedList.__Node(initial_value)
+            self.__head = DoublyLinkedList.__Node(initial_value)
             self.__length = 1
 
         self.__tail = self.__head
@@ -14,23 +14,25 @@ class LinkedList:
         return self.__length
 
     def append(self, value):
-        new_node = LinkedList.__Node(value)
+        new_node = DoublyLinkedList.__Node(value)
         if self.__length == 0:
             self.__tail = new_node
             self.__head = self.__tail
         else:
+            new_node.prev = self.__tail
             self.__tail.next = new_node
-            self.__tail = self.__tail.next
+            self.__tail = new_node
 
         self.__length += 1
         return True
 
     def prepend(self, value):
-        new_node = LinkedList.__Node(value)
+        new_node = DoublyLinkedList.__Node(value)
         if self.__length == 0:
             self.__head = new_node
             self.__tail = self.__head
         else:
+            self.__head.prev = new_node
             new_node.next = self.__head
             self.__head = new_node
 
@@ -43,10 +45,13 @@ class LinkedList:
         elif index == self.__length:
             return self.append(value)
         else:
-            new_node = LinkedList.__Node(value)
+            new_node = DoublyLinkedList.__Node(value)
             prev_node = self.__get_node(index - 1)
-            new_node.next = prev_node.next
+            after_node = prev_node.next
+            new_node.prev = prev_node
+            new_node.next = after_node
             prev_node.next = new_node
+            after_node.prev = new_node
             self.__length += 1
             return True
 
@@ -59,8 +64,9 @@ class LinkedList:
             self.__tail = None
             self.__head = self.__tail
         else:
-            self.__tail = self.__get_node(self.__length - 2)
+            self.__tail = self.__tail.prev
             self.__tail.next = None
+            popped.prev = None
 
         self.__length -= 1
         return popped.value
@@ -75,6 +81,7 @@ class LinkedList:
             self.__tail = self.__head
         else:
             self.__head = self.__head.next
+            self.__head.prev = None
             popped.next = None
 
         self.__length -= 1
@@ -88,31 +95,26 @@ class LinkedList:
         else:
             prev_node = self.__get_node(index - 1)
             removed_node = prev_node.next
-            prev_node.next = removed_node.next
+            after_node = removed_node.next
+            prev_node.next = after_node
+            after_node.prev = prev_node
             removed_node.next = None
+            removed_node.prev = None
             self.__length -= 1
-            return removed_node.value
-
-    def reverse(self):
-        if self.__length >= 2:
-            temp = self.__head
-            self.__head = self.__tail
-            self.__tail = temp
-
-            before = None
-            for _ in range(self.__length):
-                after = temp.next
-                temp.next = before
-                before = temp
-                temp = after
+            return removed_node.value if removed_node is not None else None
 
     def __get_node(self, index):
         if index < 0 or index >= self.__length:
             raise Exception('Invalid index of {} specified for Linked List of length {}'.format(index, self.__length))
 
-        current_node = self.__head
-        for _ in range(index):
-            current_node = current_node.next
+        if index < self.__length / 2:
+            current_node = self.__head
+            for _ in range(index):
+                current_node = current_node.next
+        else:
+            current_node = self.__tail
+            for _ in range(self.__length - 1, index, -1):
+                current_node = current_node.prev
 
         return current_node
 
@@ -135,11 +137,12 @@ class LinkedList:
     class __Node:
         def __init__(self, value):
             self.value = value
+            self.prev = None
             self.next = None
 
 
 if __name__ == '__main__':
-    ll = LinkedList()
+    ll = DoublyLinkedList()
     ll.print_linked_list()
     print('Popped node value: {}'.format(ll.pop()))
     print('Pop first node value: {}'.format(ll.pop_first()))
@@ -156,24 +159,18 @@ if __name__ == '__main__':
     print('Pop first node value: {}'.format(ll.pop_first()))
     ll.print_linked_list()
 
-    ll = LinkedList(22)
+    ll = DoublyLinkedList(22)
     ll.print_linked_list()
 
-    ll = LinkedList(11)
+    ll = DoublyLinkedList(11)
     ll.prepend(1)
     ll.append('End')
     ll.print_linked_list()
-    ll.reverse()
-    ll.print_linked_list()
     print('Removed value {} at index 1'.format(ll.remove(1)))
     print('Removed value {} at index 1'.format(ll.remove(1)))
-    ll.reverse()
-    print('Removed value {} at index 0'.format(ll.remove(0)))
-    ll.reverse()
-    print('Removed value {} at index 0'.format(ll.remove(0)))
     ll.print_linked_list()
 
-    ll = LinkedList('R')
+    ll = DoublyLinkedList('R')
     # Operations that cause exception to be raised
     # ll.insert(2, 'D')
     # ll.insert(-2, 'D')
@@ -187,7 +184,7 @@ if __name__ == '__main__':
     print('Node at index: {} has value: {}'.format(3, ll.get_value(3)))
     # print('Node at index: {} has value: {}'.format(4, ll.get_value(4)))
 
-    ll = LinkedList()
+    ll = DoublyLinkedList()
     ll.print_linked_list()
     ll.pop()
     ll.print_linked_list()
