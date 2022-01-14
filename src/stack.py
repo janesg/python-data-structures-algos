@@ -6,9 +6,13 @@ class Stack:
         self.__ll = LinkedList(initial_value)
 
     def push(self, value):
+        # Adding to 'head' is O(1)
+        #   - adding to 'tail' is also O(1)
         return self.__ll.prepend(value)
 
     def pop(self):
+        # Removing from 'head' is O(1)
+        #   - removing from 'tail' is a worse option as it is O(n)
         return self.__ll.pop_first()
 
     def height(self):
