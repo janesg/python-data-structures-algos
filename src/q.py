@@ -1,6 +1,8 @@
 from linked_list import LinkedList
 
 
+# Had to rename source from queue.py due to problem with Python debugger in IntelliJ:
+# - https://intellij-support.jetbrains.com/hc/en-us/community/posts/4405195364114-PyCharm-debugger-isn-t-working
 class Queue:
     def __init__(self, initial_value=None):
         self.__ll = LinkedList(initial_value)

@@ -132,6 +132,21 @@ class LinkedList:
             current_node = current_node.next
             idx += 1
 
+    def ll_as_string(self):
+        return_str = ""
+        current_node = self.__head
+        idx = 0
+        while current_node is not None:
+            if len(return_str) == 0:
+                return_str = str(current_node.value)
+            else:
+                return_str = return_str + ', ' + str(current_node.value)
+
+            current_node = current_node.next
+            idx += 1
+
+        return return_str
+
     class __Node:
         def __init__(self, value):
             self.value = value
