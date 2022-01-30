@@ -123,7 +123,16 @@ class LinkedList:
         self.__get_node(index).value = value
         return True
 
-    def print_linked_list(self):
+    def contains(self, value):
+        current_node = self.__head
+        for _ in range(self.__length):
+            if current_node.value == value:
+                return True
+            current_node = current_node.next
+
+        return False
+
+    def print(self):
         print('Linked List has {} node{}'.format(self.__length, 's' if self.__length != 1 else ''))
         current_node = self.__head
         idx = 0
@@ -132,7 +141,7 @@ class LinkedList:
             current_node = current_node.next
             idx += 1
 
-    def ll_as_string(self):
+    def as_string(self):
         return_str = ""
         current_node = self.__head
         idx = 0
@@ -155,38 +164,38 @@ class LinkedList:
 
 if __name__ == '__main__':
     ll = LinkedList()
-    ll.print_linked_list()
+    ll.print()
     print('Popped node value: {}'.format(ll.pop()))
     print('Pop first node value: {}'.format(ll.pop_first()))
     ll.insert(0, 'Middle')
     ll.insert(1, 'End')
     ll.prepend('Start')
     ll.insert(2, 'More Middle')
-    ll.print_linked_list()
+    ll.print()
     print('Popped node value: {}'.format(ll.pop()))
     print('Pop first node value: {}'.format(ll.pop_first()))
     ll.set_value(0, 'Less Middle')
-    ll.print_linked_list()
+    ll.print()
     print('Popped node value: {}'.format(ll.pop()))
     print('Pop first node value: {}'.format(ll.pop_first()))
-    ll.print_linked_list()
+    ll.print()
 
     ll = LinkedList(22)
-    ll.print_linked_list()
+    ll.print()
 
     ll = LinkedList(11)
     ll.prepend(1)
     ll.append('End')
-    ll.print_linked_list()
+    ll.print()
     ll.reverse()
-    ll.print_linked_list()
+    ll.print()
     print('Removed value {} at index 1'.format(ll.remove(1)))
     print('Removed value {} at index 1'.format(ll.remove(1)))
     ll.reverse()
     print('Removed value {} at index 0'.format(ll.remove(0)))
     ll.reverse()
     print('Removed value {} at index 0'.format(ll.remove(0)))
-    ll.print_linked_list()
+    ll.print()
 
     ll = LinkedList('R')
     # Operations that cause exception to be raised
@@ -195,23 +204,22 @@ if __name__ == '__main__':
     ll.insert(1, 'D')
     ll.insert(0, 'F')
     ll.insert(2, 'E')
-    ll.print_linked_list()
-    print('Node at index: {} has value: {}'.format(0, ll.get_value(0)))
-    print('Node at index: {} has value: {}'.format(1, ll.get_value(1)))
-    print('Node at index: {} has value: {}'.format(2, ll.get_value(2)))
-    print('Node at index: {} has value: {}'.format(3, ll.get_value(3)))
-    # print('Node at index: {} has value: {}'.format(4, ll.get_value(4)))
+    ll.print()
+    for i in range(4):
+        print('Node at index: {} has value: {}'.format(i, ll.get_value(i)))
 
     ll = LinkedList()
-    ll.print_linked_list()
+    ll.print()
     ll.pop()
-    ll.print_linked_list()
+    ll.print()
     ll.prepend(45)
-    ll.print_linked_list()
+    ll.print()
     ll.pop()
-    ll.print_linked_list()
+    ll.print()
     ll.append(456)
     ll.insert(0, 123)
-    ll.print_linked_list()
+    ll.print()
+    print("Contains 456 : {}".format(ll.contains(456)))
+    print("Contains 666 : {}".format(ll.contains(666)))
     ll.pop()
-    ll.print_linked_list()
+    ll.print()

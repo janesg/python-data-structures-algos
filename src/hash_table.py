@@ -10,10 +10,10 @@ class HashTable:
         self.__table = [None] * size
 
     def __hash(self, key):
-        hash = 0
+        hash_code = 0
         for char in key:
-            hash += ord(char) * 43
-        return hash % len(self.__table)
+            hash_code += ord(char) * 43
+        return hash_code % len(self.__table)
 
     def put(self, key, value):
         entry = {key: value}
@@ -24,13 +24,9 @@ class HashTable:
             ll = self.__table[idx]
             for i in range(ll.length):
                 single_entry_dict = ll.get_value(i)
-                # Test for whether the key of single entry dictionary matches
-                try:
-                    single_entry_dict[key]
+                if key in single_entry_dict:
                     ll.set_value(i, entry)
-                    break
-                except KeyError:
-                    pass
+                    return
             else:
                 # Weren't able to find a matching key, so add it
                 ll.append(entry)
@@ -41,12 +37,8 @@ class HashTable:
             ll = self.__table[idx]
             for i in range(ll.length):
                 single_entry_dict = ll.get_value(i)
-                # Test for whether the key of single entry dictionary matches
-                try:
-                    value = single_entry_dict[key]
-                    return value
-                except KeyError:
-                    pass
+                if key in single_entry_dict:
+                    return single_entry_dict[key]
 
             # No linked list or unable to find a matching key
             return None
@@ -62,28 +54,28 @@ class HashTable:
 
         return keys
 
-    def print_table(self):
+    def print(self):
         print()
         for i, j in enumerate(self.__table):
-            contents = None if j is None else j.ll_as_string()
+            contents = None if j is None else j.as_string()
             print("Bucket[{}] : {}".format(i, contents))
 
 
 if __name__ == "__main__":
     ht = HashTable()
-    ht.print_table()
+    ht.print()
     ht.put("egg", 2)
-    ht.print_table()
+    ht.print()
     ht.put("apple", 11)
-    ht.print_table()
+    ht.print()
     ht.put("lemon", 4)
-    ht.print_table()
+    ht.print()
     ht.put("tomato", 23)
-    ht.print_table()
+    ht.print()
     ht.put("grape", 16)
-    ht.print_table()
+    ht.print()
     print("We have {} grapes".format(ht.get("grape")))
     ht.put("grape", 33)
-    ht.print_table()
+    ht.print()
     print("We have {} dinosaurs".format(ht.get("dinosaur")))
     print(ht.keys())

@@ -18,8 +18,8 @@ class Stack:
     def height(self):
         return self.__ll.length
 
-    def print_stack(self):
-        self.__ll.print_linked_list()
+    def print(self):
+        self.__ll.print()
 
 
 if __name__ == '__main__':
@@ -29,15 +29,15 @@ if __name__ == '__main__':
     stack = Stack(56)
     print(stack.height())
     print(stack.pop())
-    stack.print_stack()
+    stack.print()
     stack.push('Eric')
     stack.push('Bob')
     stack.push('Nigel')
-    stack.print_stack()
+    stack.print()
     print(stack.pop())
-    stack.print_stack()
+    stack.print()
     print(stack.pop())
     print(stack.pop())
     print(stack.pop())
-    stack.print_stack()
+    stack.print()
 

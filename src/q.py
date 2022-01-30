@@ -20,8 +20,8 @@ class Queue:
     def length(self):
         return self.__ll.length
 
-    def print_queue(self):
-        self.__ll.print_linked_list()
+    def print(self):
+        self.__ll.print()
 
 
 if __name__ == '__main__':
@@ -31,15 +31,15 @@ if __name__ == '__main__':
     q = Queue(56)
     print(q.length())
     print(q.dequeue())
-    q.print_queue()
+    q.print()
     q.enqueue('Eric')
     q.enqueue('Bob')
     q.enqueue('Nigel')
-    q.print_queue()
+    q.print()
     print(q.dequeue())
-    q.print_queue()
+    q.print()
     print(q.dequeue())
     print(q.dequeue())
     print(q.dequeue())
-    q.print_queue()
+    q.print()
 

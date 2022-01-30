@@ -65,11 +65,12 @@ class BinarySearchTree:
 
         return temp.value
 
-    def print_tree_top(self):
-        print("{} <-- {} --> {}".format(
-            self.__root.left.value,
-            self.__root.value,
-            self.__root.right.value))
+    def print_root(self):
+        self.__print_node(self.__root)
+
+    @staticmethod
+    def __print_node(node):
+        print("{} <-- {} --> {}".format(node.left.value, node.value, node.right.value))
 
     class __Node:
         def __init__(self, value):
@@ -95,7 +96,7 @@ if __name__ == '__main__':
     tree.insert(40)
     tree.insert(41)
     tree.insert(43)
-    tree.print_tree_top()
+    tree.print_root()
 
     print(tree.contains(13))
     print(tree.contains(42))
