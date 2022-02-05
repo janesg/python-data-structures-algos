@@ -68,6 +68,66 @@ class BinarySearchTree:
     def print_root(self):
         self.__print_node(self.__root)
 
+    # Breadth First Search
+    def bfs(self):
+        results = []
+        q = [self.__root]
+
+        while len(q) != 0:
+            node = q.pop(0)
+            results.append(node.value)
+            if node.left is not None:
+                q.append(node.left)
+            if node.right is not None:
+                q.append(node.right)
+
+        return results
+
+    # Depth First Search - Pre Order
+    def dfs_pre_order(self):
+        results = []
+
+        def traverse(node):
+            results.append(node.value)
+            if node.left is not None:
+                traverse(node.left)
+            if node.right is not None:
+                traverse(node.right)
+
+        traverse(self.__root)
+
+        return results
+
+    # Depth First Search - Post Order
+    def dfs_post_order(self):
+        results = []
+
+        def traverse(node):
+            if node.left is not None:
+                traverse(node.left)
+            if node.right is not None:
+                traverse(node.right)
+            results.append(node.value)
+
+        traverse(self.__root)
+
+        return results
+
+    # Depth First Search - In Order
+    def dfs_in_order(self):
+        results = []
+
+        def traverse(node):
+            if node.left is not None:
+                traverse(node.left)
+            results.append(node.value)
+            if node.right is not None:
+                traverse(node.right)
+
+        traverse(self.__root)
+
+        return results
+
     @staticmethod
     def __print_node(node):
         print("{} <-- {} --> {}".format(node.left.value, node.value, node.right.value))
@@ -102,3 +162,22 @@ if __name__ == '__main__':
     print(tree.contains(42))
     print("Min value: {}".format(tree.min_value()))
     print("Max value: {}".format(tree.max_value()))
+
+    #         4
+    #       /   \
+    #     2       6
+    #   /  \    /  \
+    #  1    3  5    7
+    tree = BinarySearchTree()
+    tree.insert(4)
+    tree.insert(2)
+    tree.insert(1)
+    tree.insert(3)
+    tree.insert(6)
+    tree.insert(5)
+    tree.insert(7)
+
+    print("Breadth First Search            : {}".format(tree.bfs()))
+    print("Depth First Search (Pre Order)  : {}".format(tree.dfs_pre_order()))
+    print("Depth First Search (Post Order) : {}".format(tree.dfs_post_order()))
+    print("Depth First Search (In Order)   : {}".format(tree.dfs_in_order()))
